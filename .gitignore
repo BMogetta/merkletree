@@ -1,0 +1,8 @@
+#env
+.env
+
+#testing
+coverage/*
+
+#binary
+por_pol_api
