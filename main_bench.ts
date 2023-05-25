@@ -1,5 +1,5 @@
-import main  from "./main.ts";
+import main from './main.ts';
 
 Deno.bench(async function verifyMerkleProofWithOrder() {
-  await main(10000, false)
+	await main(10000, false);
 });

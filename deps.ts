@@ -1,7 +1,7 @@
 //https://deno.land/std@0.188.0?doc
-export { assertEquals, assertThrows, assert} from "std/testing/asserts.ts";
-export { crypto, toHashString } from "std/crypto/mod.ts";
-export type { DigestAlgorithm } from "std/crypto/mod.ts";
+export { assert, assertEquals, assertThrows } from 'std/testing/asserts.ts';
+export { crypto, toHashString } from 'std/crypto/mod.ts';
+export type { DigestAlgorithm } from 'std/crypto/mod.ts';
 
 //https://deno.land/x
 
