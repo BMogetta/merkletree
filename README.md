@@ -1,3 +1,4 @@
+[![Test](https://github.com/BMogetta/merkletree/actions/workflows/deno.yml/badge.svg)](https://github.com/BMogetta/merkletree/actions/workflows/deno.yml)
 # Requirements
 
 - **Deno**
