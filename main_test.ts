@@ -1,12 +1,5 @@
-import { assert, assertEquals, assertThrows } from 'deps';
-import {
-	Account,
-	ClientData,
-	ClientList,
-	ClientPath,
-	Path,
-	UID,
-} from 'schemas';
+import { assert, assertEquals } from 'deps';
+import { ClientList, Path } from 'schemas';
 import { generateClientList } from './src/helpers/create_clients.ts';
 import {
 	computeMerkleTree,
@@ -42,6 +35,7 @@ Deno.test('hashList should return a hashed list of the same length as the input 
 });
 Deno.test('hashList should throw an error if non-stringifiable input is given', async () => {
 	// Create an object with a circular reference
+	// deno-lint-ignore no-explicit-any
 	const circularObject: any = {};
 	circularObject.self = circularObject;
 
@@ -54,6 +48,7 @@ Deno.test('hashList should throw an error if non-stringifiable input is given', 
 	}
 });
 Deno.test('hashList should throw an error when inputList doesn\'t follow the ClientList format - Case 1: Not an object', async () => {
+	// deno-lint-ignore no-explicit-any
 	const badInputList: any = [1, 2, 3];
 
 	try {
@@ -63,6 +58,7 @@ Deno.test('hashList should throw an error when inputList doesn\'t follow the Cli
 	}
 });
 Deno.test('hashList should throw an error when inputList doesn\'t follow the ClientList format - Case 2: Array instead of object', async () => {
+	// deno-lint-ignore no-explicit-any
 	const badInputList: any = [[], [], []];
 
 	try {
@@ -72,6 +68,7 @@ Deno.test('hashList should throw an error when inputList doesn\'t follow the Cli
 	}
 });
 Deno.test('hashList should throw an error when inputList doesn\'t follow the ClientList format - Case 3: Object with more than one property', async () => {
+	// deno-lint-ignore no-explicit-any
 	const badInputList: any = [{ a: 1, b: 2 }];
 
 	try {
@@ -196,6 +193,7 @@ Deno.test('verifyMerkleProofWithOrder should return false for an invalid proof',
 });
 Deno.test('verifyMerkleProofWithOrder should throw an error if non-stringifiable input is given', async () => {
 	// Create an object with a circular reference
+	// deno-lint-ignore no-explicit-any
 	const circularObject: any = {};
 	circularObject.self = circularObject;
 

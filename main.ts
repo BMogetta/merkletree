@@ -163,7 +163,7 @@ export default async function main(
 	const tree = await computeMerkleTree(randomUserList);
 	const depth = tree.length;
 	const root = tree[tree.length - 1][0];
-	const allPaths = await generateProofForEveryUser(randomUserList, tree);
+	const allPaths = generateProofForEveryUser(randomUserList, tree);
 	const randomUserPathProof = allPaths.find((users) => randomUserID in users);
 	if (randomUserPathProof) {
 		const verifyWithOrder = await verifyMerkleProofWithOrder(
@@ -171,25 +171,80 @@ export default async function main(
 			root,
 			randomUserPathProof[randomUserID],
 		);
-		console.log(' ');
 		if (verbose) {
+			//TODO: fix over-undeflow consider using decimals.js or similar
 			console.log(
-				`Random generated amount of users (${number_of_test_users}), tokens (1-10) and balances (1e-17 - 1e9)`,
-			); //TODO: fix over-undeflow consider using decimals.js or similar
-			console.log(' ');
-			console.log('Generated Merkle tree, depth', depth, ', root value', root);
-			console.log(' ');
-			console.log('Random user account:', randomUserID);
-			console.log(randomUserList[randomUser][randomUserID]);
-			console.log(' ');
-			console.log('Proof path generated for', allPaths.length, 'users');
-			console.log(' ');
-			console.log('Random user', randomUserID, 'proof path:');
-			console.log(randomUserPathProof[randomUserID]);
-			console.log('');
-			console.log('Was the user include in the tree: ', verifyWithOrder);
+				'\n\x1b[37m\x1b[1m\x1b[4m' +
+						`Random generated amount of users (${number_of_test_users}), tokens (1-10) and balances (1e-17 - 1e9)` +
+						'\x1b[0m',
+		);
+			console.log(
+				'\n\x1b[1m\x1b[4m' + 'Generated Merkle tree:' + '\x1b[0m',
+			);
+			console.log(
+				'\x1b[0m' + '\n\tdepth' + '\x1b[36m',
+				depth + '\x1b[0m\n',
+				'\x1b[0m' + '\troot' + '\x1b[36m',
+				root + '\x1b[0m\n',
+			);
+
+			console.log(
+				'\x1b[1m\x1b[4m' + 'Random user account:' + '\x1b[0m' + '\x1b[32m',
+				randomUserID,
+				'\x1b[0m',
+			);
+
+			const coloredArray = randomUserList[randomUser][randomUserID].map(
+				(item) => {
+					return '\x1b[36m' + item[0] + '\x1b[0m: \x1b[95m' + item[1] +
+						'\x1b[0m';
+				},
+			);
+			console.log('\n\t' + coloredArray.join('\n\t'));
+			console.log(
+				'\n\x1b[1m\x1b[4m' + 'Generating proof for every user:' + '\x1b[0m',
+			);
+
+			console.log(
+				'\n\t' +
+					(allPaths.length === number_of_test_users
+						? '\x1b[32m' + 'Success' + '\x1b[0m'
+						: '\x1b[31m' + 'Fail' + '\x1b[0m'),
+			);
+
+			console.log(
+				'\n\x1b[1m\x1b[4m' + 'Proof path for the user:' + '\x1b[0m' + ' '+
+					'\x1b[32m' + randomUserID + '\x1b[0m'
+			);
+			// Get the maximum length of the hash
+			const maxHashLength = Math.max(
+				...randomUserPathProof[randomUserID].map((item) => item.hash.length),
+			);
+
+			// Prepare the header
+			const header = '\n\t\x1b[37m\x1b[4m' + 'hash'.padEnd(maxHashLength) +
+				'\tisRight\x1b[0m\n';
+
+			console.log(header); // Print the header
+
+			randomUserPathProof[randomUserID].forEach((item) => {
+				console.log(
+					'\t\x1b[36m' + item.hash.padEnd(maxHashLength) + '\x1b[0m\t\x1b[95m' +
+						item.isRight + '\x1b[0m',
+				);
+			});
+
+			console.log(
+				'\n\x1b[1m\x1b[4m' + 'Was the user included in the tree:' + '\x1b[0m',
+			);
+
+			console.log(
+				'\n\t' +
+					(verifyWithOrder
+						? '\x1b[32m' + verifyWithOrder + '\x1b[0m'
+						: '\x1b[31m' + verifyWithOrder + '\x1b[0m'),
+			);
 		}
-		console.log('');
 	}
 }
 // Learn more at https://deno.land/manual/examples/module_metadata#concepts
