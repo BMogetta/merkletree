@@ -175,9 +175,9 @@ export default async function main(
 			//TODO: fix over-undeflow consider using decimals.js or similar
 			console.log(
 				'\n\x1b[37m\x1b[1m\x1b[4m' +
-						`Random generated amount of users (${number_of_test_users}), tokens (1-10) and balances (1e-17 - 1e9)` +
-						'\x1b[0m',
-		);
+					`Random generated amount of users (${number_of_test_users}), tokens (1-10) and balances (1e-17 - 1e9)` +
+					'\x1b[0m',
+			);
 			console.log(
 				'\n\x1b[1m\x1b[4m' + 'Generated Merkle tree:' + '\x1b[0m',
 			);
@@ -213,8 +213,8 @@ export default async function main(
 			);
 
 			console.log(
-				'\n\x1b[1m\x1b[4m' + 'Proof path for the user:' + '\x1b[0m' + ' '+
-					'\x1b[32m' + randomUserID + '\x1b[0m'
+				'\n\x1b[1m\x1b[4m' + 'Proof path for the user:' + '\x1b[0m' + ' ' +
+					'\x1b[32m' + randomUserID + '\x1b[0m',
 			);
 			// Get the maximum length of the hash
 			const maxHashLength = Math.max(
